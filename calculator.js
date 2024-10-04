@@ -11,7 +11,7 @@ function multiply (a, b) {
 }
 
 function divide (a, b) {
-    return a / b;  // limit decimal places
+    return parseFloat((a / b).toFixed(7));
 }
 
 function operate (a, b, operator) {
@@ -26,6 +26,7 @@ function resetCalc () {
     secondValue = 0;
     currentOp = '';
     opActive = false;
+    displayState = 'freeze';
 }
 
 const display = document.querySelector(".display");
@@ -33,12 +34,13 @@ const numberBtns = document.querySelectorAll(".number");
 const operatorBtns = document.querySelectorAll(".operator");
 const equalBtn = document.querySelector(".equal");
 const clearBtn = document.querySelector(".clear");
+const decimalBtn = document.querySelector(".decimal");
 
 let displayValue;
 let displayState = 'freeze';
 let opActive = false;
 
-let currentOp = ''
+let currentOp = '';
 let firstValue = 0;
 let secondValue = 0;
 
@@ -72,7 +74,7 @@ operatorBtns.forEach(btn => {
             result = operate(firstValue, secondValue, currentOp);
             firstValue = display.textContent = result;
             displayState = "freeze";
-        }
+        };
     });
 });
 
@@ -88,5 +90,15 @@ equalBtn.addEventListener("click", () => {
 clearBtn.addEventListener("click", () => {
     resetCalc();
     display.textContent = 0;
-    displayState = 'freeze';
-})
+});
+
+decimalBtn.addEventListener("click", () => {
+    if (display.textContent.includes(".")) return;
+    if (displayState === "freeze") {
+        display.textContent = "0.";
+    } else {
+        display.textContent += ".";
+    }
+    displayState = "stack";
+    displayValue = display.textContent;
+});
