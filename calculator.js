@@ -23,8 +23,15 @@ function operate (a, b, operator) {
 
 const display = document.querySelector(".display");
 const numberBtns = document.querySelectorAll(".number");
+const operatorBtns = document.querySelectorAll(".operator");
+
 let displayValue;
-let displayState = 'freeze'
+let displayState = 'freeze';
+let opActive = false;
+
+let currentOp = ''
+let firstValue;
+let secondValue;
 
 numberBtns.forEach((btn) => {
     btn.addEventListener("click", () => {
@@ -36,5 +43,20 @@ numberBtns.forEach((btn) => {
         };
         displayValue = display.textContent;
     });
-    
-})
+});
+
+operatorBtns.forEach(btn => {
+    btn.addEventListener("click", () => {
+        currentOp = btn.textContent;
+        if (!opActive) {
+            firstValue = +display.textContent;
+            displayState = "freeze";
+            opActive = true;
+        } else {
+            secondValue = +display.textContent;
+            result = operate(firstValue, secondValue, currentOp);
+            firstValue = display.textContent = result;
+            displayState = "freeze";
+        }
+    });
+});
