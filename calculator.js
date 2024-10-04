@@ -56,11 +56,17 @@ numberBtns.forEach((btn) => {
 
 operatorBtns.forEach(btn => {
     btn.addEventListener("click", () => {
-        currentOp = btn.textContent;
         if (!opActive) {
+            currentOp = btn.textContent;
             firstValue = +display.textContent;
             displayState = "freeze";
             opActive = true;
+        } else if (opActive && currentOp !== btn.textContent) {
+            secondValue = +display.textContent;
+            result = operate(firstValue, secondValue, currentOp);
+            firstValue = display.textContent = result;
+            currentOp = btn.textContent;
+            displayState = "freeze";
         } else {
             secondValue = +display.textContent;
             result = operate(firstValue, secondValue, currentOp);
@@ -75,7 +81,7 @@ equalBtn.addEventListener("click", () => {
     result = operate(firstValue, secondValue, currentOp);
     if (!result) result = display.textContent;
     display.textContent = result;
-    
+
     resetCalc();
 });
 
