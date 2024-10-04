@@ -32,14 +32,15 @@ const display = document.querySelector(".display");
 const numberBtns = document.querySelectorAll(".number");
 const operatorBtns = document.querySelectorAll(".operator");
 const equalBtn = document.querySelector(".equal");
+const clearBtn = document.querySelector(".clear");
 
 let displayValue;
 let displayState = 'freeze';
 let opActive = false;
 
 let currentOp = ''
-let firstValue;
-let secondValue;
+let firstValue = 0;
+let secondValue = 0;
 
 numberBtns.forEach((btn) => {
     btn.addEventListener("click", () => {
@@ -72,12 +73,14 @@ operatorBtns.forEach(btn => {
 equalBtn.addEventListener("click", () => {
     secondValue = +display.textContent;
     result = operate(firstValue, secondValue, currentOp);
+    if (!result) result = display.textContent;
     display.textContent = result;
-
+    
     resetCalc();
+});
 
-    //firstValue = 0;
-    //secondValue = 0;
-    //currentOp = '';
-    //opActive = false;
+clearBtn.addEventListener("click", () => {
+    resetCalc();
+    display.textContent = 0;
+    displayState = 'freeze';
 })
