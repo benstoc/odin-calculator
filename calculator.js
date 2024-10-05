@@ -35,6 +35,8 @@ const operatorBtns = document.querySelectorAll(".operator");
 const equalBtn = document.querySelector(".equal");
 const clearBtn = document.querySelector(".clear");
 const decimalBtn = document.querySelector(".decimal");
+const percentBtn = document.querySelector(".percent");
+const flipBtn = document.querySelector(".flip");
 
 let displayValue;
 let displayState = 'freeze';
@@ -61,20 +63,18 @@ operatorBtns.forEach(btn => {
         if (!opActive) {
             currentOp = btn.textContent;
             firstValue = +display.textContent;
-            displayState = "freeze";
             opActive = true;
         } else if (opActive && currentOp !== btn.textContent) {
             secondValue = +display.textContent;
             result = operate(firstValue, secondValue, currentOp);
             firstValue = display.textContent = result;
             currentOp = btn.textContent;
-            displayState = "freeze";
         } else {
             secondValue = +display.textContent;
             result = operate(firstValue, secondValue, currentOp);
             firstValue = display.textContent = result;
-            displayState = "freeze";
         };
+        displayState = "freeze";
     });
 });
 
@@ -93,7 +93,7 @@ clearBtn.addEventListener("click", () => {
 });
 
 decimalBtn.addEventListener("click", () => {
-    if (display.textContent.includes(".")) return;
+    if (display.textContent.includes(".") && displayState !== "freeze") return;
     if (displayState === "freeze") {
         display.textContent = "0.";
     } else {
@@ -102,3 +102,8 @@ decimalBtn.addEventListener("click", () => {
     displayState = "stack";
     displayValue = display.textContent;
 });
+
+flipBtn.addEventListener("click", () => {
+    display.textContent = "-" + display.textContent;
+});
+
