@@ -104,6 +104,10 @@ decimalBtn.addEventListener("click", () => {
 });
 
 flipBtn.addEventListener("click", () => {
-    display.textContent = "-" + display.textContent;
+    if (display.textContent.includes("-")) {
+        display.textContent = display.textContent.slice(1);
+    } else {
+        display.textContent = "-" + display.textContent;
+    }
 });
 
