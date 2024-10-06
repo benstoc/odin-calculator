@@ -111,3 +111,7 @@ flipBtn.addEventListener("click", () => {
     }
 });
 
+percentBtn.addEventListener("click", () => {
+    display.textContent = (+display.textContent / 100).toPrecision(3);
+})
+
