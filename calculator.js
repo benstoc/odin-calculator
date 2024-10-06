@@ -17,7 +17,7 @@ function divide (a, b) {
 function operate (a, b, operator) {
     if (operator === '+') return add(a, b);
     if (operator === '-') return subtract(a, b);
-    if (operator === '*') return multiply(a, b);
+    if (operator === '*') return multiply(a, b).toPrecision(4);
     if (operator === '/') return divide(a, b);
 }
 
@@ -113,5 +113,6 @@ flipBtn.addEventListener("click", () => {
 
 percentBtn.addEventListener("click", () => {
     display.textContent = (+display.textContent / 100).toPrecision(3);
+    displayState = "freeze"
 })
 
