@@ -29,6 +29,14 @@ function resetCalc () {
     displayFrozen = true
 }
 
+function updateDisplay () {
+    if (displayValue.length > 9) {
+        display.textContent = displayValue.slice(0, 9);
+        return;
+    }
+    display.textContent = displayValue;
+}
+
 const display = document.querySelector(".display");
 const buttons = document.querySelectorAll("button");
 const numberBtns = document.querySelectorAll(".number");
@@ -39,9 +47,8 @@ const decimalBtn = document.querySelector(".decimal");
 const percentBtn = document.querySelector(".percent");
 const flipBtn = document.querySelector(".flip");
 
-let displayFrozen = false;
-let displayValue;
-
+let displayFrozen = true;
+let displayValue = 0;
 let opActive = false;
 let currentOp = '';
 let firstValue = 0;
@@ -50,12 +57,12 @@ let secondValue = 0;
 numberBtns.forEach((btn) => {
     btn.addEventListener("click", () => {
         if (displayFrozen) {
-            display.textContent = btn.id;
+            displayValue = btn.id;
             displayFrozen = false;
         } else {
-            display.textContent += btn.id;
+            displayValue += btn.id;
         };
-        displayValue = display.textContent;
+        updateDisplay();
     });
 });
 
@@ -68,14 +75,15 @@ operatorBtns.forEach(btn => {
         } else if (opActive && currentOp !== btn.textContent) {
             secondValue = +display.textContent;
             result = operate(firstValue, secondValue, currentOp);
-            firstValue = display.textContent = result;
+            firstValue = displayValue = result;
             currentOp = btn.textContent;
         } else {
             secondValue = +display.textContent;
             result = operate(firstValue, secondValue, currentOp);
-            firstValue = display.textContent = result;
+            firstValue = displayValue = result;
         };
         displayFrozen = true;
+        updateDisplay()
     });
 });
 
@@ -83,8 +91,9 @@ equalBtn.addEventListener("click", () => {
     secondValue = +display.textContent;
     result = operate(firstValue, secondValue, currentOp);
     if (!result) result = display.textContent;
-    display.textContent = result;
+    displayValue = result;
 
+    updateDisplay();
     resetCalc();
 });
 
@@ -94,26 +103,28 @@ clearBtn.addEventListener("click", () => {
 });
 
 decimalBtn.addEventListener("click", () => {
-    if (display.textContent.includes(".") && displayFrozen) return; // prevents multiple decimal points
+    if (displayValue.includes(".") && !opActive) return; // prevents multiple decimal points
     if (displayFrozen) {
-        display.textContent = "0.";
+        displayValue = "0.";
     } else {
-        display.textContent += ".";
+        displayValue += ".";
     }
     displayFrozen = false;
-    displayValue = display.textContent;
+    updateDisplay();
 });
 
 flipBtn.addEventListener("click", () => {
-    if (display.textContent.includes("-")) {
-        display.textContent = display.textContent.slice(1);
+    if (displayValue.includes("-")) {
+        displayValue = display.textContent.slice(1);
     } else {
-        display.textContent = "-" + display.textContent;
+        displayValue = "-" + display.textContent;
     }
+    updateDisplay();
 });
 
 percentBtn.addEventListener("click", () => {
-    display.textContent = (+display.textContent / 100).toPrecision(3);
+    displayValue = (+display.textContent / 100).toPrecision(3);
     displayFrozen = true;
+    updateDisplay();
 })
 
