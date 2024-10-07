@@ -63,6 +63,10 @@ function resetCalc () {
     displayFrozen = true
 }
 
+buttons.forEach(btn => {
+    btn.tabIndex = -1;
+});
+
 numberBtns.forEach((btn) => {
     btn.addEventListener("click", () => {
         if (displayFrozen) {
@@ -112,7 +116,7 @@ clearBtn.addEventListener("click", () => {
 });
 
 decimalBtn.addEventListener("click", () => {
-    if (displayValue.includes(".") && !opActive) return; // prevents multiple decimal points
+    if (displayValue.toString().includes(".") && !opActive) return; // prevents multiple decimal points
     if (displayFrozen) {
         displayValue = "0.";
     } else {
@@ -123,7 +127,7 @@ decimalBtn.addEventListener("click", () => {
 });
 
 flipBtn.addEventListener("click", () => {
-    if (displayValue.toString().includes("-")) {
+    if (displayValue.toString().charAt(0) === '-') {
         displayValue = display.textContent.slice(1);
     } else {
         displayValue = "-" + display.textContent;
@@ -136,4 +140,16 @@ percentBtn.addEventListener("click", () => {
     displayFrozen = true;
     updateDisplay();
 })
+
+
+window.addEventListener("keydown", (e) => {
+    const keyBtn = document.querySelector(`button[data-key="${e.key}"]`)
+    keyBtn.click();
+    keyBtn.classList.add(`${keyBtn.classList[0]}-active`)
+
+    setTimeout(() => {
+        keyBtn.classList.remove(`${keyBtn.classList[0]}-active`);
+    }, 50);
+})
+
 
