@@ -26,10 +26,11 @@ function resetCalc () {
     secondValue = 0;
     currentOp = '';
     opActive = false;
-    displayState = 'freeze';
+    displayState = FREEZE;
 }
 
 const display = document.querySelector(".display");
+const buttons = document.querySelectorAll("button");
 const numberBtns = document.querySelectorAll(".number");
 const operatorBtns = document.querySelectorAll(".operator");
 const equalBtn = document.querySelector(".equal");
@@ -38,19 +39,21 @@ const decimalBtn = document.querySelector(".decimal");
 const percentBtn = document.querySelector(".percent");
 const flipBtn = document.querySelector(".flip");
 
+const FREEZE = 'freeze';
+const STACK = 'stack';
+let displayState = FREEZE;
 let displayValue;
-let displayState = 'freeze';
-let opActive = false;
 
+let opActive = false;
 let currentOp = '';
 let firstValue = 0;
 let secondValue = 0;
 
 numberBtns.forEach((btn) => {
     btn.addEventListener("click", () => {
-        if (displayState === "freeze") {
+        if (displayState === FREEZE) {
             display.textContent = btn.id;
-            displayState = "stack";
+            displayState = STACK;
         } else {
             display.textContent += btn.id;
         };
@@ -74,7 +77,7 @@ operatorBtns.forEach(btn => {
             result = operate(firstValue, secondValue, currentOp);
             firstValue = display.textContent = result;
         };
-        displayState = "freeze";
+        displayState = FREEZE;
     });
 });
 
@@ -93,13 +96,13 @@ clearBtn.addEventListener("click", () => {
 });
 
 decimalBtn.addEventListener("click", () => {
-    if (display.textContent.includes(".") && displayState !== "freeze") return;
-    if (displayState === "freeze") {
+    if (display.textContent.includes(".") && displayState !== FREEZE) return; // prevents multiple decimal points
+    if (displayState === FREEZE) {
         display.textContent = "0.";
     } else {
         display.textContent += ".";
     }
-    displayState = "stack";
+    displayState = STACK;
     displayValue = display.textContent;
 });
 
@@ -113,6 +116,6 @@ flipBtn.addEventListener("click", () => {
 
 percentBtn.addEventListener("click", () => {
     display.textContent = (+display.textContent / 100).toPrecision(3);
-    displayState = "freeze"
+    displayState = FREEZE;
 })
 

@@ -1,11 +1,16 @@
+:root {
+    --number-color: 100,100,100;
+}
+
 * {
     padding: 0;
     margin: 0;
     font-family: monospace;
+    color: #1b1b1b
 }
 
 body {
-    background-color: #414833;
+    background-color: #a4ac86;
     margin-top: 100px;
 }
 
@@ -13,13 +18,13 @@ body {
     width: 370px;
     height: auto;
     margin: auto;
-    border: 2px solid black;
+    border: 4px solid #333d29;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     gap: 3px;
     padding: 10px;
-    background-color: #a4ac86;
+    background-color: #656d4a;
     border-radius: 8px;
 }
 
@@ -27,8 +32,10 @@ button {
     width: 90px;
     height: 90px;
     font-size: 30px;
-    border-radius: 16px;
-    border: 1px solid black;
+    border-radius: 48px;
+    border: 2px solid #333d29;
+    appearance: auto;
+    transition: background-color 0.05s ease;
 }
 
 .container .display {
@@ -37,11 +44,12 @@ button {
     width: 360px;
     height: 90px;
     line-height: 90px;
-    border: 4px solid black;
+    border: 4px solid #333d29;
     margin-bottom: 2px;
     background-color: #c2c5aa;
     border-radius: 8px;
     white-space: nowrap;
+    padding: 0px 5px;
 }
 
 .row {
@@ -55,14 +63,32 @@ button {
     width: 183px;
 }
 
-.number {
+.number,
+.decimal {
     background-color: #b6ad90;
+    /*transition: background-color 0.05s ease;*/
+}
+
+.number:active {
+    background-color: #D0C7AA;
 }
 
 .operator {
     background-color: #a68a64;
 }
 
+.operator:active {
+    background-color: #C0A47E;
+}
+
 .func {
     background-color: #936639;
+}
+
+.func:active {
+    background-color: #AD8053;
+}
+
+.tinted {
+    filter: opacity(65%);
 }
