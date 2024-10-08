@@ -1,5 +1,10 @@
 :root {
-    --number-color: 100,100,100;
+    --body-bg: #a4ac86;
+    --container-bg: #72785b;
+    --display-bg: #c2c5aa;
+    --number-bg: #b6ad90;
+    --operator-bg: #a68a64;
+    --func-bg: #936639;
 }
 
 * {
@@ -70,18 +75,21 @@ button {
 }
 
 .number:active,
-.decimal:active,
 .number-active,
+.decimal:active,
 .decimal-active {
     background-color: #D0C7AA;
 }
 
-.operator {
+.operator,
+.equal {
     background-color: #a68a64;
 }
 
 .operator:active,
-.operator-active {
+.operator-active,
+.equal:active,
+.equal-active {
     background-color: #C0A47E;
 }
 

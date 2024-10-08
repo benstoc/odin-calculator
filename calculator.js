@@ -61,6 +61,14 @@ function resetCalc () {
     currentOp = '';
     opActive = false;
     displayFrozen = true
+    displayValue = 0;
+    removeActiveClass();
+}
+
+function removeActiveClass () {
+    operatorBtns.forEach(btn => {
+        btn.classList.remove("operator-active");
+    });
 }
 
 buttons.forEach(btn => {
@@ -82,14 +90,17 @@ numberBtns.forEach((btn) => {
 operatorBtns.forEach(btn => {
     btn.addEventListener("click", () => {
         if (!opActive) {
-            currentOp = btn.textContent;
+            currentOp = btn.id;
             firstValue = +display.textContent;
             opActive = true;
-        } else if (opActive && currentOp !== btn.textContent) {
+            btn.classList.add("operator-active");
+        } else if (opActive && currentOp !== btn.id) {
+            removeActiveClass()
             secondValue = +display.textContent;
             result = operate(firstValue, secondValue, currentOp);
             firstValue = displayValue = result;
-            currentOp = btn.textContent;
+            currentOp = btn.id;
+            btn.classList.add("operator-active");
         } else {
             secondValue = +display.textContent;
             result = operate(firstValue, secondValue, currentOp);
@@ -139,17 +150,18 @@ percentBtn.addEventListener("click", () => {
     displayValue = (+display.textContent / 100).toPrecision(3);
     displayFrozen = true;
     updateDisplay();
-})
+});
 
 
 window.addEventListener("keydown", (e) => {
     const keyBtn = document.querySelector(`button[data-key="${e.key}"]`)
     keyBtn.click();
-    keyBtn.classList.add(`${keyBtn.classList[0]}-active`)
 
+    let activeClass = `${keyBtn.classList[0]}-active`
+    keyBtn.classList.add(activeClass)
     setTimeout(() => {
-        keyBtn.classList.remove(`${keyBtn.classList[0]}-active`);
+        keyBtn.classList.remove(activeClass);
     }, 50);
-})
+});
 
 
