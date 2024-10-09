@@ -6,6 +6,9 @@ function add (a, b) {
 }
 
 function subtract (a, b) {
+    result = (a - b).toString();
+    if (result.length > 8)
+        return Number(result).toPrecision(5);
     return a - b;
 }
 
@@ -30,6 +33,9 @@ function operate (a, b, operator) {
     if (operator === '/') return divide(a, b);
 }
 
+const MAX_DISPLAY_LENGTH = 9;
+const MAX_NUMBER_LENGTH = 8;
+
 const display = document.querySelector(".display");
 const buttons = document.querySelectorAll("button");
 const numberBtns = document.querySelectorAll(".number");
@@ -42,14 +48,14 @@ const flipBtn = document.querySelector(".flip");
 
 let displayFrozen = true;
 let displayValue = 0;
-let opActive = false;
-let currentOp = '';
+let operatorActive = false;
+let currentOperation = '';
 let firstValue = 0;
 let secondValue = 0;
 
 function updateDisplay () {
-    if (displayValue.length > 9) {
-        display.textContent = displayValue.slice(0, 9);
+    if (displayValue.length > MAX_DISPLAY_LENGTH) {
+        display.textContent = displayValue.slice(0, MAX_DISPLAY_LENGTH);
         return;
     }
     display.textContent = displayValue;
@@ -58,10 +64,9 @@ function updateDisplay () {
 function resetCalc () {
     firstValue = 0;
     secondValue = 0;
-    currentOp = '';
-    opActive = false;
+    currentOperation = '';
+    operatorActive = false;
     displayFrozen = true
-    displayValue = 0;
     removeActiveClass();
 }
 
@@ -72,7 +77,7 @@ function removeActiveClass () {
 }
 
 buttons.forEach(btn => {
-    btn.tabIndex = -1;
+    btn.tabIndex = -1; // NOT TABABLE
 });
 
 numberBtns.forEach((btn) => {
@@ -89,23 +94,30 @@ numberBtns.forEach((btn) => {
 
 operatorBtns.forEach(btn => {
     btn.addEventListener("click", () => {
-        if (!opActive) {
-            currentOp = btn.id;
+        if (!operatorActive) {
+            currentOperation = btn.id;
             firstValue = +display.textContent;
-            opActive = true;
+            operatorActive = true;
             btn.classList.add("operator-active");
-        } else if (opActive && currentOp !== btn.id) {
+        } else if (operatorActive && currentOperation !== btn.id) {
             removeActiveClass()
             secondValue = +display.textContent;
-            result = operate(firstValue, secondValue, currentOp);
+            result = operate(firstValue, secondValue, currentOperation);
             firstValue = displayValue = result;
-            currentOp = btn.id;
+            currentOperation = btn.id;
             btn.classList.add("operator-active");
         } else {
             secondValue = +display.textContent;
-            result = operate(firstValue, secondValue, currentOp);
+            result = operate(firstValue, secondValue, currentOperation);
             firstValue = displayValue = result;
         };
+
+        if (Array.from(btn.classList).includes("operator-active")) {
+            btn.classList.add("disable-hover");
+        } else {
+            btn.classList.remove("disable-hover");
+        };
+
         displayFrozen = true;
         updateDisplay()
     });
@@ -113,7 +125,7 @@ operatorBtns.forEach(btn => {
 
 equalBtn.addEventListener("click", () => {
     secondValue = +display.textContent;
-    result = operate(firstValue, secondValue, currentOp);
+    result = operate(firstValue, secondValue, currentOperation);
     if (!result) result = display.textContent;
     displayValue = result;
 
@@ -124,10 +136,11 @@ equalBtn.addEventListener("click", () => {
 clearBtn.addEventListener("click", () => {
     resetCalc();
     display.textContent = 0;
+    displayValue = 0;
 });
 
 decimalBtn.addEventListener("click", () => {
-    if (displayValue.toString().includes(".") && !opActive) return; // prevents multiple decimal points
+    if (displayValue.toString().includes(".") && !operatorActive) return; // prevents multiple decimal points
     if (displayFrozen) {
         displayValue = "0.";
     } else {
@@ -154,14 +167,15 @@ percentBtn.addEventListener("click", () => {
 
 
 window.addEventListener("keydown", (e) => {
-    const keyBtn = document.querySelector(`button[data-key="${e.key}"]`)
+    const keyBtn = document.querySelector(`button[data-key="${e.key}"]`);
+    if (!keyBtn) return;
     keyBtn.click();
 
-    let activeClass = `${keyBtn.classList[0]}-active`
-    keyBtn.classList.add(activeClass)
-    setTimeout(() => {
-        keyBtn.classList.remove(activeClass);
-    }, 50);
+    if (!Array.from(keyBtn.classList).includes("operator")) {
+        let activeClass = `${keyBtn.classList[0]}-active`
+        keyBtn.classList.add(activeClass)
+        setTimeout(() => keyBtn.classList.remove(activeClass), 50);
+    }
 });
 
 

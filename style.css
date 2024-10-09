@@ -5,17 +5,25 @@
     --number-bg: #b6ad90;
     --operator-bg: #a68a64;
     --func-bg: #936639;
+    --border-color: #333d29;
+
+    --hover-number-bg: #BEB598;
+    --active-number-bg: #D0C7AA;
+    --hover-operator-bg: #AE926C;
+    --active-operator-bg: #C0A47E;
+    --hover-func-bg: #9B6E41;
+    --active-func-bg: #AD8053;
 }
 
 * {
     padding: 0;
     margin: 0;
     font-family: monospace;
-    color: #1b1b1b
+    color: #242b1d
 }
 
 body {
-    background-color: #a4ac86;
+    background-color: var(--body-bg);
     margin-top: 80px;
 }
 
@@ -24,14 +32,14 @@ body {
     height: auto;
     margin: auto;
     padding: 10px;
-    border: 4px solid #333d29;
+    border: 4px solid var(--border-color);
     border-radius: 16px;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     gap: 4px;
-    background-color: #656d4a;
-    filter: drop-shadow(8px 8px 6px #72785b);
+    background-color: var(--container-bg);
+    filter: drop-shadow(8px 8px 6px var(--container-bg));
 }
 
 button {
@@ -39,9 +47,9 @@ button {
     height: 90px;
     font-size: 30px;
     border-radius: 48px;
-    border: 2px solid #333d29;
+    border: 2px solid var(--border-color);
     transition: background-color 0.05s ease;
-    filter: drop-shadow(1px 2px #333d29)
+    filter: drop-shadow(1px 2px var(--border-color))
 }
 
 .container .display {
@@ -52,9 +60,9 @@ button {
     margin-bottom: 2px;
     padding: 0px 5px;
     line-height: 90px;
-    border: 4px solid #333d29;
+    border: 4px solid var(--border-color);
     border-radius: 16px;
-    background-color: #c2c5aa;
+    background-color: var(--display-bg);
     white-space: nowrap;
 }
 
@@ -69,35 +77,54 @@ button {
     width: 183px;
 }
 
+/* Button coloring + interaction - ${class}-active classes are for js */
 .number,
 .decimal {
-    background-color: #b6ad90;
+    background-color: var(--number-bg);
+}
+
+.number:hover,
+.decimal:hover {
+    background-color: var(--hover-number-bg);
 }
 
 .number:active,
 .number-active,
 .decimal:active,
 .decimal-active {
-    background-color: #D0C7AA;
+    background-color: var(--active-number-bg);
 }
 
 .operator,
 .equal {
-    background-color: #a68a64;
+    background-color: var(--operator-bg);
+}
+
+.operator:hover,
+.equal:hover {
+    background-color: var(--hover-operator-bg);
+}
+
+.disable-hover:hover {
+    background-color: var(--active-operator-bg);
 }
 
 .operator:active,
 .operator-active,
 .equal:active,
 .equal-active {
-    background-color: #C0A47E;
+    background-color: var(--active-operator-bg);
 }
 
 .func {
-    background-color: #936639;
+    background-color: var(--func-bg);
+}
+
+.func:hover {
+    background-color: var(--hover-func-bg);
 }
 
 .func:active,
 .func-active {
-    background-color: #AD8053;
+    background-color: var(--active-func-bg);
 }
