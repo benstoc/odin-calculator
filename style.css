@@ -1,17 +1,17 @@
 :root {
     --body-bg: #a4ac86;
-    --container-bg: #72785b;
+    --container-bg: #7A8063;
     --display-bg: #c2c5aa;
-    --number-bg: #b6ad90;
-    --operator-bg: #a68a64;
-    --func-bg: #936639;
-    --border-color: #333d29;
+    --number-bg: #BEB598;
+    --operator-bg: #AE926C;
+    --func-bg: #9B6E41;
+    --border-color: #424C38;
 
-    --hover-number-bg: #BEB598;
+    --hover-number-bg: #C6BDA0;
     --active-number-bg: #D0C7AA;
-    --hover-operator-bg: #AE926C;
+    --hover-operator-bg: #B69A74;
     --active-operator-bg: #C0A47E;
-    --hover-func-bg: #9B6E41;
+    --hover-func-bg: #A37649;
     --active-func-bg: #AD8053;
 }
 
@@ -24,7 +24,11 @@
 
 body {
     background-color: var(--body-bg);
-    margin-top: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    height: 100vh;
 }
 
 .container {
