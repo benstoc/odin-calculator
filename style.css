@@ -77,10 +77,6 @@ button {
     align-items: center;
 }
 
-.zero {
-    width: 183px;
-}
-
 /* Button coloring + interaction - ${class}-active classes are for js */
 .number,
 .decimal {

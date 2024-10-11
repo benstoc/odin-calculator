@@ -41,6 +41,7 @@ containter.addEventListener("click", event => {
     if (btn.classList.contains("flip")) flipEvent();
     if (btn.classList.contains("percent")) percentEvent();
     if (btn.classList.contains("clear")) clearEvent();
+    if (btn.classList.contains("back")) backEvent();
 
     updateDisplay();
 })
@@ -144,6 +145,12 @@ function percentEvent() {
 
     displayValue = result;
     displayFrozen = true;
+}
+
+function backEvent() {
+    numLength = display.textContent.length;
+    displayValue = display.textContent.slice(0, numLength - 1);
+    updateDisplay();
 }
 
 window.addEventListener("keydown", (e) => {
