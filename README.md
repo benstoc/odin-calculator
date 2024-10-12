@@ -12,7 +12,7 @@ The display can be either in a **frozen** or **unfrozen** state:
 
 The display has the following constraints:
 - It allows for up to **9 characters**.
-- When the result of an operation exceeds **9 characters**, it is automatically converted to **scientific notation**.
+- When the result of an operation exceeds **10 characters**, it is automatically converted to **scientific notation**.
 
 ### Operator Chaining
 You can **chain operators** together without needing to press the equals button in between. When you select a new operator, the first operation is computed, the display freezes, and the result of the first operation becomes the starting number for the next operation.

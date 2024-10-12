@@ -17,7 +17,7 @@ function operate (a, b, operator) {
     return result;
 }
 
-const MAX_DISPLAY_LENGTH = 9;
+const MAX_DISPLAY_LENGTH = 10;
 const MAX_NUMBER_LENGTH = 8;
 const OPERATOR_ACTIVE_CLASS = "med-color-active";
 
@@ -51,7 +51,6 @@ containter.addEventListener("click", event => {
 function updateDisplay() {
     if (displayValue.length > MAX_DISPLAY_LENGTH) {
         displayValue = displayValue.slice(0, MAX_DISPLAY_LENGTH);
-        return;
     } else if (displayValue.length === 0) {
         displayValue = 0;
         displayFrozen = true;
@@ -154,6 +153,7 @@ function percentEvent() {
 
 function backEvent() {
     displayValue = display.textContent.slice(0, -1);
+    if (displayValue === '-') displayValue = 0;
     updateDisplay();
 }
 
