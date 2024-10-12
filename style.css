@@ -78,30 +78,24 @@ button {
 }
 
 /* Button coloring + interaction - ${class}-active classes are for js */
-.number,
-.decimal {
+.light-color {
     background-color: var(--number-bg);
 }
 
-.number:hover,
-.decimal:hover {
+.light-color:hover{
     background-color: var(--hover-number-bg);
 }
 
-.number:active,
-.number-active,
-.decimal:active,
-.decimal-active {
+.light-color:active,
+.light-color-active {
     background-color: var(--active-number-bg);
 }
 
-.operator,
-.equal {
+.med-color {
     background-color: var(--operator-bg);
 }
 
-.operator:hover,
-.equal:hover {
+.med-color:hover {
     background-color: var(--hover-operator-bg);
 }
 
@@ -109,22 +103,20 @@ button {
     background-color: var(--active-operator-bg);
 }
 
-.operator:active,
-.operator-active,
-.equal:active,
-.equal-active {
+.med-color:active,
+.med-color-active{
     background-color: var(--active-operator-bg);
 }
 
-.func {
+.dark-color {
     background-color: var(--func-bg);
 }
 
-.func:hover {
+.dark-color:hover {
     background-color: var(--hover-func-bg);
 }
 
-.func:active,
-.func-active {
+.dark-color:active,
+.dark-color-active {
     background-color: var(--active-func-bg);
 }

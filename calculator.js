@@ -19,6 +19,8 @@ function operate (a, b, operator) {
 
 const MAX_DISPLAY_LENGTH = 9;
 const MAX_NUMBER_LENGTH = 8;
+const OPERATOR_ACTIVE_CLASS = "med-color-active";
+
 const containter = document.querySelector(".container");
 const display = document.querySelector(".display");
 const buttons = document.querySelectorAll("button");
@@ -48,8 +50,11 @@ containter.addEventListener("click", event => {
 
 function updateDisplay() {
     if (displayValue.length > MAX_DISPLAY_LENGTH) {
-        display.textContent = displayValue.slice(0, MAX_DISPLAY_LENGTH);
+        displayValue = displayValue.slice(0, MAX_DISPLAY_LENGTH);
         return;
+    } else if (displayValue.length === 0) {
+        displayValue = 0;
+        displayFrozen = true;
     }
     display.textContent = displayValue;
 }
@@ -85,7 +90,7 @@ function operatorEvent(btn) {
     if (!currentOperator) {
         currentOperator = btn.id;
         firstValue = Number(display.textContent);
-        btn.classList.add("operator-active");
+        btn.classList.add(OPERATOR_ACTIVE_CLASS);
     } else {
         handleSecondInput(btn);
     }
@@ -102,18 +107,18 @@ function handleSecondInput(btn) {
     if ((currentOperator !== btn.id) && (btn.id !== "=")) {
         removeActiveClass();
         currentOperator = btn.id;
-        btn.classList.add("operator-active");
+        btn.classList.add(OPERATOR_ACTIVE_CLASS);
     }
 }
 
 function removeActiveClass() {
     operatorBtns.forEach(btn => {
-        btn.classList.remove("operator-active");
+        btn.classList.remove(OPERATOR_ACTIVE_CLASS);
     });
 }
 
 function updateOperatorClasses(btn) {
-    if (btn.classList.contains("operator-active")) {
+    if (btn.classList.contains(OPERATOR_ACTIVE_CLASS)) {
         btn.classList.add("disable-hover");
     } else {
         btn.classList.remove("disable-hover");
@@ -132,7 +137,7 @@ function clearEvent() {
 }
 
 function flipEvent() {
-    if (displayValue < 0) {
+    if (displayValue <= 0) {
         displayValue = display.textContent.slice(1);
     } else {
         displayValue = "-" + display.textContent;
@@ -148,8 +153,7 @@ function percentEvent() {
 }
 
 function backEvent() {
-    numLength = display.textContent.length;
-    displayValue = display.textContent.slice(0, numLength - 1);
+    displayValue = display.textContent.slice(0, -1);
     updateDisplay();
 }
 
@@ -159,7 +163,7 @@ window.addEventListener("keydown", (e) => {
     keyBtn.click();
 
     if (!keyBtn.classList.contains("operator")) {
-        let activeClass = `${keyBtn.classList[0]}-active`
+        let activeClass = `${keyBtn.classList[1]}-active`
         keyBtn.classList.add(activeClass)
         setTimeout(() => keyBtn.classList.remove(activeClass), 50);
     }
