@@ -30,8 +30,8 @@ const operatorBtns = document.querySelectorAll(".operator");
 let displayFrozen = true;
 let displayValue = 0;
 let currentOperator = '';
-let firstValue = 0;
-let secondValue = 0;
+let firstValue = null;
+let secondValue = null;
 
 containter.addEventListener("click", event => {
     const btn = event.target.closest("button");
@@ -68,8 +68,8 @@ function updateHistory(btn) {
 }
 
 function resetCalc() {
-    firstValue = 0;
-    secondValue = 0;
+    firstValue = null;
+    secondValue = null;
     currentOperator = '';
     displayFrozen = true;
     removeActiveClass();
@@ -111,7 +111,7 @@ function handleSecondInput(btn) {
     secondValue = Number(display.textContent);
     result = operate(firstValue, secondValue, currentOperator);
 
-    if (firstValue && currentOperator) updateHistory(btn);
+    if (firstValue !== null && currentOperator) updateHistory(btn);
     if (!result && result !== 0) result = display.textContent;
 
     firstValue = displayValue = result;
