@@ -18,7 +18,6 @@ function operate (a, b, operator) {
 }
 
 const MAX_DISPLAY_LENGTH = 10;
-const MAX_NUMBER_LENGTH = 8;
 const OPERATOR_ACTIVE_CLASS = "med-color-active";
 
 const containter = document.querySelector(".container");

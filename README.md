@@ -6,12 +6,14 @@ A simple webpage calculator featuring standard arithmetic operations and keyboar
 ## Features
 
 ### Display / Output
+The calculator display features a history section at the top and an input section at the bottom, updating dynamically as operations are entered.
+
 The display can be either in a **frozen** or **unfrozen** state:
 - **Unfrozen:** Allows continuous input of numbers without resetting the display.
 - **Frozen:** Activated when an operator is selected, so the next numerical input will clear the display and start a new number. This allows you to input the second number of an operation without manually clearing the previous result.
 
 The display has the following constraints:
-- It allows for up to **9 characters**.
+- It allows for up to **10 characters**.
 - When the result of an operation exceeds **10 characters**, it is automatically converted to **scientific notation**.
 
 ### Operator Chaining
