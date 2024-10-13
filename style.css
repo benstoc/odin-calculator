@@ -1,4 +1,5 @@
 :root {
+    --font-color: #242b1d;
     --body-bg: #a4ac86;
     --container-bg: #7A8063;
     --display-bg: #c2c5aa;
@@ -19,7 +20,7 @@
     padding: 0;
     margin: 0;
     font-family: monospace;
-    color: #242b1d
+    color: var(--font-color)
 }
 
 body {
@@ -59,16 +60,31 @@ button {
 
 .container .display {
     text-align: right;
-    font-size: 58px;
     width: 360px;
-    height: 90px;
+    height: 100px;
     margin-bottom: 2px;
-    padding: 0px 5px;
-    line-height: 90px;
+    padding: 8px 8px 16px 5px;
     border: 4px solid var(--border-color);
     border-radius: 16px;
     background-color: var(--display-bg);
     white-space: nowrap;
+    box-shadow: inset 0px 1px 1px 1px var(--border-color);
+    display: flex;
+    justify-content: end;
+    flex-direction: column;
+    gap: 11px;
+}
+
+.display-main {
+    font-size: 58px;
+    height: 58px;
+}
+
+.display-history {
+    font-size: 22px;
+    font-weight: 550;
+    height: 20px;
+    padding-right: 10px;
 }
 
 .row {

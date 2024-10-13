@@ -22,7 +22,8 @@ const MAX_NUMBER_LENGTH = 8;
 const OPERATOR_ACTIVE_CLASS = "med-color-active";
 
 const containter = document.querySelector(".container");
-const display = document.querySelector(".display");
+const display = document.querySelector(".display-main");
+const history = document.querySelector(".display-history");
 const buttons = document.querySelectorAll("button");
 const operatorBtns = document.querySelectorAll(".operator");
 
@@ -56,6 +57,14 @@ function updateDisplay() {
         displayFrozen = true;
     }
     display.textContent = displayValue;
+}
+
+function updateHistory(btn) {
+    if (btn.id === "=") {
+        history.textContent = `${firstValue} ${currentOperator} ${secondValue} =`;
+    } else {
+        history.textContent = `${firstValue} ${currentOperator}`;
+    }
 }
 
 function resetCalc() {
@@ -94,15 +103,18 @@ function operatorEvent(btn) {
         handleSecondInput(btn);
     }
     updateOperatorClasses(btn);
+    updateHistory(btn);
     displayFrozen = true;
 }
 
 function handleSecondInput(btn) {
     secondValue = Number(display.textContent);
     result = operate(firstValue, secondValue, currentOperator);
-    if (!result && result !== 0) result = display.textContent;
-    firstValue = displayValue = result;
 
+    if (firstValue && currentOperator) updateHistory(btn);
+    if (!result && result !== 0) result = display.textContent;
+
+    firstValue = displayValue = result;
     if ((currentOperator !== btn.id) && (btn.id !== "=")) {
         removeActiveClass();
         currentOperator = btn.id;
@@ -132,6 +144,7 @@ function equalEvent(btn) {
 function clearEvent() {
     resetCalc();
     display.textContent = 0;
+    history.textContent = ''
     displayValue = 0;
 }
 
